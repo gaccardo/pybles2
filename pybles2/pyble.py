@@ -60,20 +60,28 @@ class Pyble(object):
 
         return total
 
-    def get_paddings(self, ):
-        title_width = self.get_title_width()
-        padding = (title_width-len(self.title))/2
+    def is_title_set(self):
+        return self.title is not None
+
+    def get_paddings(self, cell):
+        if self.is_title_set():
+            title_width = self.get_title_width()
+            padding = (title_width-len(self.title))/2
+        else:
+            columns_width = self.get_columns_width()
+            padding = (sum(columns_width.values())-len(cell))/2
+
         if padding % 2 == 0:
             return {0: padding-1, 1: padding-1}
         else:
             return {0: padding, 1: padding-1}
 
     def get_cell_formated(self, cell):
-        padding = self.get_paddings()
+        padding = self.get_paddings(cell)
         cell_formated = "%s%s%s%s%s" % (
             self.column_token,
             " " * padding[0],
-            self.title,
+            cell,
             " " * padding[1],
             self.column_token)
         return cell_formated
@@ -105,3 +113,4 @@ if __name__ == "__main__":
     print pb.get_line_separator()
     print pb.get_title_formated()
     print pb.get_line_separator()
+    print pb.get_header()

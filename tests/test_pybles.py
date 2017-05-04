@@ -92,12 +92,10 @@ class TestPyble(unittest.TestCase):
         )
 
     def test_get_header(self):
+        self.pb.set_title("this is a title")
         self.pb.set_columns(['columna', 'columnb'])
         self.pb.add_line(['1234234234', '234'])
         self.assertEqual(
             self.pb.get_header(),
-            [
-                "|   columna   |",
-                "|   columnb   |"
-            ]
+            ['|       columna      |', '|       columnb      |']
         )
