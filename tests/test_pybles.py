@@ -90,3 +90,14 @@ class TestPyble(unittest.TestCase):
             self.pb.get_line_separator(),
             "------------------------------"
         )
+
+    def test_get_header(self):
+        self.pb.set_columns(['columna', 'columnb'])
+        self.pb.add_line(['1234234234', '234'])
+        self.assertEqual(
+            self.pb.get_header(),
+            [
+                "|   columna   |",
+                "|   columnb   |"
+            ]
+        )

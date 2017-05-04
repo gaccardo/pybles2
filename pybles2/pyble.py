@@ -68,21 +68,32 @@ class Pyble(object):
         else:
             return {0: padding, 1: padding-1}
 
-    def get_title_formated(self):
-        if self.title is None:
-            raise exceptions.TitleNotSet
-
+    def get_cell_formated(self, cell):
         padding = self.get_paddings()
-        title_formated = "%s%s%s%s%s" % (
+        cell_formated = "%s%s%s%s%s" % (
             self.column_token,
             " " * padding[0],
             self.title,
             " " * padding[1],
             self.column_token)
-        return title_formated
+        return cell_formated
+
+    def get_title_formated(self):
+        if self.title is None:
+            raise exceptions.TitleNotSet
+
+        return self.get_cell_formated(self.title)
 
     def get_line_separator(self):
         return "-" * len(self.get_title_formated())
+
+    def get_header(self):
+        formated = list()
+        for cell in self.columns:
+            formated.append(
+                self.get_cell_formated(cell)
+            )
+        return formated
 
 if __name__ == "__main__":
     pb = Pyble()
