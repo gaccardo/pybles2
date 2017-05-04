@@ -4,3 +4,7 @@ class ColumnsNumberDoesNotMatch(Exception):
 
 class ColumnsAlreadySet(Exception):
     pass
+
+
+class TitleNotSet(Exception):
+    pass

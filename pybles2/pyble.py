@@ -4,7 +4,7 @@ from pybles2.src import exceptions
 class Pyble(object):
 
     def __init__(self, title=None, columns=list(), lines=list(),
-                 line_token="-", column_token="#"):
+                 line_token="-", column_token="|"):
         self.title = title
         self.columns = columns
         self.lines = lines
@@ -60,6 +60,30 @@ class Pyble(object):
 
         return total
 
+    def get_paddings(self, ):
+        title_width = self.get_title_width()
+        padding = (title_width-len(self.title))/2
+        if padding % 2 == 0:
+            return {0: padding-1, 1: padding-1}
+        else:
+            return {0: padding, 1: padding-1}
+
+    def get_title_formated(self):
+        if self.title is None:
+            raise exceptions.TitleNotSet
+
+        padding = self.get_paddings()
+        title_formated = "%s%s%s%s%s" % (
+            self.column_token,
+            " " * padding[0],
+            self.title,
+            " " * padding[1],
+            self.column_token)
+        return title_formated
+
+    def get_line_separator(self):
+        return "-" * len(self.get_title_formated())
+
 if __name__ == "__main__":
     pb = Pyble()
     pb.set_title("this is a title")
@@ -67,3 +91,6 @@ if __name__ == "__main__":
     pb.add_line(['1234234234', '234'])
     print pb.get_columns_width()
     print pb.get_title_width()
+    print pb.get_line_separator()
+    print pb.get_title_formated()
+    print pb.get_line_separator()

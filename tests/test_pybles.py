@@ -54,3 +54,39 @@ class TestPyble(unittest.TestCase):
         self.pb.add_line(['1234234234', '234'])
         self.pb.add_line(['1', '234234234234'])
         self.assertEqual(self.pb.get_title_width(), 30)
+
+    def test_get_title_formated_odd(self):
+        self.pb.set_title("this is a title")
+        self.pb.set_columns(['columna', 'columnb'])
+        self.pb.add_line(['1234234234', '234'])
+        self.pb.add_line(['1', '234234234234'])
+        self.assertEqual(
+            self.pb.get_title_formated(),
+            "|       this is a title      |"
+        )
+
+    def test_get_title_formated_even(self):
+        self.pb.set_title("this is  title")
+        self.pb.set_columns(['columna', 'columnb'])
+        self.pb.add_line(['1234234234', '234'])
+        self.pb.add_line(['1', '234234234234'])
+        self.assertEqual(
+            self.pb.get_title_formated(),
+            "|       this is  title       |"
+        )
+
+    def test_get_title_formated_no_title(self):
+        self.assertRaises(
+            exceptions.TitleNotSet,
+            self.pb.get_title_formated
+        )
+
+    def test_get_line_separator(self):
+        self.pb.set_title("this is  title")
+        self.pb.set_columns(['columna', 'columnb'])
+        self.pb.add_line(['1234234234', '234'])
+        self.pb.add_line(['1', '234234234234'])
+        self.assertEqual(
+            self.pb.get_line_separator(),
+            "------------------------------"
+        )
